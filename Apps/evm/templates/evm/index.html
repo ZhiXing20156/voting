@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+ <head>
+        <title>主页</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+        <!-- jQuery AND jQueryUI -->
+        <script type="text/javascript" src="{% static 'index/js/libs/jquery/1.6/jquery.min.js'%}"></script>
+        <script type="text/javascript" src="{% static 'index/js/libs/jqueryui/1.8.13/jquery-ui.min.js' %}"></script>
+
+        <link rel="stylesheet" href="{% static 'index/css/min.css' %}" />
+        <script type="text/javascript" src="{% static 'index/js/min.js' %}"></script>
+
+         <link href="{% static 'evm/bootstrap/css/jquery-ui.css' %}" rel="stylesheet" media="screen">
+        <link href="{% static 'evm/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'evm/css/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'evm/images/favicon.ico' %}" rel="shortcut icon"/>
+         <script src="{% static 'evm/js/html5shiv.js' %}"></script>
+    <!-- <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script> -->
+        <script src="{% static 'evm/js/respond.min.js' %}"></script>
+
+ </head>
+ <body>
+ <script type="text/javascript" src="{% static 'index/content/settings/main.js' %}"></script>
+<link rel="stylesheet" href="{% static 'index/content/settings/style.css' %}" />
+<!--Header-->
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <!-- Logo -->
+                <div class="logo">
+                    <h1><a>四九一台干部考核管理系统</a></h1>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group form">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <span class="input-group-btn">
+                             <button class="btn btn-primary" type="button">搜索</button>
+                           </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="navbar navbar-inverse" role="banner">
+                    <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="glyphicon glyphicon-user"></i> {{ request.session.user_name }}
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu animated fadeInUp">
+                                    <li><a href="{% url 'evm:logout' %}"><i class="glyphicon glyphicon-off"></i> 退出登录</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="sidebar content-box" style="display: block;">
+                <ul class="nav">
+                    <!-- Main menu -->
+                    <!--默认选择，默认展开-->
+                    <li class="submenu current open" >
+                        <a href="#">
+                            <i class="glyphicon glyphicon-tags"></i> 干部选任
+                            <span class="caret pull-right"></span>
+                        </a>
+                        <ul>
+                            <li><a href="{% url 'compete:paper_list' %}"> 竞争上岗</a></li>
+                            <li><a href="{% url 'recom:paper_list' %}"> 民主测评</a></li>
+                            <li><a href="{% url 'employ:paper_list' %}"> 届满考核</a></li>
+                        </ul>
+                    <li><a href="{% url 'annual:paper_list' %}"><i class="glyphicon glyphicon-record"></i> 年度考核</a></li>
+                    <li><a href="{% url 'evm:grade_list' %}"><i class="glyphicon glyphicon-road"></i> 角色管理</a></li>
+                    <li><a href="{% url 'evm:dep_list' %}"><i class="glyphicon glyphicon-list"></i> 部门管理</a></li>
+                    <li><a href="{% url 'evm:user_list' %}"><i class="glyphicon glyphicon-user"></i> 用户管理</a></li>
+                </ul>
+            </div>
+        </div>
+
+       <!--content-->
+        <div id="content" class="white">
+            <h3> 主页</h3>
+
+        <div class="bloc left">
+            <div class="title">
+                干部选任
+            </div>
+            <div class="content dashboard">
+                <div class="center">
+                    <a href="{% url 'compete:paper_list' %}" class="shortcut">
+                        <img src="{% static 'index/img/page.png' %}" alt="" width="48" height="48"/>
+                        竞争上岗
+                    </a>
+                    <a href="{% url 'recom:paper_list' %}" class="shortcut">
+                        <img src="{% static 'index/img/picture.png' %}" alt="" width="48" height="48" />
+                        民主测评
+                    </a>
+                    <a href="{% url 'employ:paper_list' %}" class="shortcut">
+                        <img src="{% static 'index/img/contact.png' %}" alt="" width="48" height="48" />
+                        届满考核
+                    </a>
+
+                    <div class="cb"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="bloc main"> </div>
+
+        <div class="bloc right">
+            <div class="title">
+                年度考核
+            </div>
+            <div class="content dashboard">
+                <div class="center">
+                    <a href="{% url 'annual:paper_list' %}" class="shortcut last">
+                        <img src="{% static 'index/img/event.png' %}" alt="" width="48" height="48" />
+                        年度考核
+                    </a>
+                    <div class="cb"></div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<link href="{% static 'evm/vendors/datatables/dataTables.bootstrap.css' %}" rel="stylesheet" media="screen">
+<!-- <script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> -->
+<script src="{% static 'evm/js/jquery.js' %}"></script>
+<script src="{% static 'evm/js/jquery-ui.js' %}"></script>
+<script src="{% static 'evm/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'evm/vendors/datatables/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'evm/vendors/datatables/dataTables.bootstrap.js' %}"></script>
+<script src="{% static 'evm/js/custom.js' %}"></script>
+<script src="{% static 'evm/js/tables.js' %}"></script>
+ </body>
+</html>
+
+
+
+
+
+
+        

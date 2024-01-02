@@ -1,0 +1,40 @@
+{% extends "employ/voting/base.html" %}
+{% load static %}
+
+{% block title %}
+    首页
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="container">
+        <br>
+        <br>
+        <h4>测评信息</h4>
+        <div class="container">
+            <div class="row mt-4">
+                {% for p in paper %}
+                <!-- 文章内容 -->
+                <div class="col-6 mb-6">
+                    <!-- 卡片容器 -->
+                    <div class="card">
+                        <!-- 标题 -->
+                        <h4 class="card-header">{{ p.title }}</h4>
+                        <!-- 摘要 -->
+                        <div class="card-body">
+                            <p class="card-text">测评时间:   {{ p.ctime }}</p>
+                            <br/>
+                            <a href="{% url 'employ:detail' %}/?name={{ user }}&id={{ p.id }}"  class="card-link">开始投票</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+
+

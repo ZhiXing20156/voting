@@ -1,0 +1,167 @@
+{% extends "employ/base.html" %}
+{% load static %}
+
+{% block title %}
+    测评投票管理系统
+{% endblock title %}
+
+{% block layout %}
+
+    <li class="submenu" >
+    <a href="#">
+        <i class="glyphicon glyphicon-stats"></i> 测评统计
+        <span class="caret pull-right"></span>
+    </a>
+    <ul>
+        <li><a href="{% url 'employ:count_all' %}"> 全体</a></li>
+        <li><a href="{% url 'employ:count_leader' %}">台领导</a></li>
+        <li><a href="{% url 'employ:count_middle' %}">中层干部</a></li>
+        <li><a href="{% url 'employ:count_staff' %}">普通职工</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-10">
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title"><i class="glyphicon glyphicon-hand-right"></i> 中层干部</div>
+        </div>
+        <div class="col-md-3 col-sm-6 pull-right">
+            <button class="glyphicon glyphicon-print btn btn-primary pull-right" onclick="preview(1)"> 打印</button>
+            <form action="{% url 'employ:download' %}" method="post" enctype="multipart/form-data">
+             {% csrf_token %}
+                <button class="glyphicon  glyphicon-download-alt btn btn-default" type="submit"> 导出</button>
+            </form>
+        </div>
+
+        <div class="panel-body">
+            <!--startprint1-->
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+               <thead>
+                 <tr>
+                    <th class="text-center" style="vertical-align: middle;width: 80px;" rowspan="3">内容<br/>等次<br/>姓名</th>
+                    <th class="text-center" colspan="4">德</th>
+                    <th class="text-center" colspan="4">能</th>
+                    <th class="text-center" colspan="4">勤</th>
+                    <th class="text-center" colspan="4">绩</th>
+                    <th class="text-center" colspan="4">廉</th>
+                    <th class="text-center" style="vertical-align: middle;" rowspan="2" colspan="4">续聘意见</th>
+                 </tr>
+                 <tr>
+                        <th class="text-center" style="font-weight: lighter;vertical-align: middle;" colspan="4">
+                        政治态度<br/>大局意识<br/>思想品德
+                    </th>
+                    <th class="text-center" style="font-weight: lighter;vertical-align: middle;" colspan="4">
+                        政策水平<br/>组织协调<br/>业务能力<br/>心理素质
+                    </th>
+                    <th class="text-center" style="font-weight: lighter;vertical-align: middle;" colspan="4">
+                        精神状态<br/>工作作风
+                    </th>
+                    <th class="text-center" style="font-weight: lighter;vertical-align: middle;" colspan="4">
+                        履行职责成效<br/>解决复杂问题<br/>基础建设
+                    </th>
+                    <th class="text-center" style="font-weight: lighter;vertical-align: middle;" colspan="4">
+                        廉洁自律
+                    </th>
+                 </tr>
+                 <tr>
+                    <th class="text-center" >好</th>
+                    <th class="text-center">较好</th>
+                    <th class="text-center">一般</th>
+                    <th class="text-center">较差</th>
+
+                    <th class="text-center" >好</th>
+                    <th class="text-center">较好</th>
+                    <th class="text-center">一般</th>
+                    <th class="text-center">较差</th>
+
+                    <th class="text-center" >好</th>
+                    <th class="text-center">较好</th>
+                    <th class="text-center">一般</th>
+                    <th class="text-center">较差</th>
+
+                    <th class="text-center" >好</th>
+                    <th class="text-center">较好</th>
+                    <th class="text-center">一般</th>
+                    <th class="text-center">较差</th>
+
+                    <th class="text-center" >好</th>
+                    <th class="text-center">较好</th>
+                    <th class="text-center">一般</th>
+                    <th class="text-center">较差</th>
+
+                    <th class="text-center">同意</th>
+                    <th class="text-center">不同意</th>
+                    <th class="text-center">弃权</th>
+                 </tr>
+                </thead>
+                <tbody>
+                {% for obj in count_middle %}
+                        <tr>
+                            <td class="text-center">{{ obj.obj }}</td>
+                            <td class="text-center">{{ obj.q11 }}</td>
+                            <td class="text-center">{{ obj.q12 }}</td>
+                            <td class="text-center">{{ obj.q13 }}</td>
+                            <td class="text-center">{{ obj.q14 }}</td>
+
+                            <td class="text-center">{{ obj.q21 }}</td>
+                            <td class="text-center">{{ obj.q22 }}</td>
+                            <td class="text-center">{{ obj.q23 }}</td>
+                            <td class="text-center">{{ obj.q24 }}</td>
+
+
+                            <td class="text-center">{{ obj.q31 }}</td>
+                            <td class="text-center">{{ obj.q32 }}</td>
+                            <td class="text-center">{{ obj.q33 }}</td>
+                            <td class="text-center">{{ obj.q34 }}</td>
+
+                            <td class="text-center">{{ obj.q41 }}</td>
+                            <td class="text-center">{{ obj.q42 }}</td>
+                            <td class="text-center">{{ obj.q43 }}</td>
+                            <td class="text-center">{{ obj.q44 }}</td>
+                            <td class="text-center">{{ obj.q51 }}</td>
+                            <td class="text-center">{{ obj.q52 }}</td>
+                            <td class="text-center">{{ obj.q53 }}</td>
+                            <td class="text-center">{{ obj.q54 }}</td>
+                            <td class="text-center">{{ obj.vA }}</td>
+                            <td class="text-center">{{ obj.vB }}</td>
+                            <td class="text-center">{{ obj.vC }}</td>
+
+                        </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+            <!--endprint1-->
+            <br/>
+            <div class="col-md-3 col-sm-6 pull-right">
+                <a href="{% url 'employ:count_leader' %}" class="btn btn-default">
+                    <i class="glyphicon glyphicon-chevron-left"></i> 上一页</a>
+                <a href="{% url 'employ:count_staff' %}" class="btn btn-default pull-right">
+                    下一页 <i class="glyphicon glyphicon-chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+{% block js %}
+    <script>
+     // 打印
+     function preview(oper) {
+       if (oper < 10) {
+         bdhtml = window.document.body.innerHTML; //获取当前页的html代码
+         sprnstr = "<!--startprint" + oper + "-->"; //设置打印开始区域
+         eprnstr = "<!--endprint" + oper + "-->"; //设置打印结束区域
+         prnhtml = bdhtml.substring(bdhtml.indexOf(sprnstr) + 18); //从开始代码向后取html
+         prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr)); //从结束代码向前取html
+         window.document.body.innerHTML = prnhtml;
+         window.print();
+         window.document.body.innerHTML = bdhtml;
+       } else {
+         window.print();
+       }
+     }
+    </script>
+{% endblock %}

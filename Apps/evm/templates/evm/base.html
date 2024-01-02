@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!--标题-->
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<link href="https://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" rel="stylesheet" media="screen">-->
+    <link href="{% static 'evm/bootstrap/css/jquery-ui.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'evm/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'evm/css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'evm/images/favicon.ico' %}" rel="shortcut icon"/>
+    <!-- <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> -->
+    <script src="{% static 'evm/js/html5shiv.js' %}"></script>
+    <!-- <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script> -->
+    <script src="{% static 'evm/js/respond.min.js' %}"></script>
+    {% block css %}{% endblock %}
+    <style>
+    @media print {
+      .control {
+        display: none;
+      }
+      body {
+        background: white;
+      }
+      .one {
+        box-shadow: 0 0 0 white;
+      }
+    }
+    </style>
+
+</head>
+
+<body>
+<!--Header-->
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <!-- Logo -->
+                <div class="logo">
+                    <h1><a>四九一台干部考核管理系统</a></h1>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group form">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <span class="input-group-btn">
+	                         <button class="btn btn-primary" type="button">搜索</button>
+	                       </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="navbar navbar-inverse" role="banner">
+                    <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="glyphicon glyphicon-user"></i> {{ request.session.user_name }}
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu animated fadeInUp">
+                                    <li><a href="{% url 'evm:logout' %}"><i class="glyphicon glyphicon-off"></i> 退出登录</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="sidebar content-box" style="display: block;">
+                <ul class="nav">
+                    <!-- Main menu -->
+                    <li class="submenu current open" >
+                        <a href="#">
+                            <i class="glyphicon glyphicon-tags"></i> 干部选任
+                            <span class="caret pull-right"></span>
+                        </a>
+                        <ul>
+                            <li><a href="{% url 'compete:paper_list' %}"> 竞争上岗</a></li>
+                            <li><a href="{% url 'recom:paper_list' %}"> 民主测评</a></li>
+                            <li><a href="{% url 'employ:paper_list' %}"> 届满考核</a></li>
+                        </ul>
+                    <li><a href="{% url 'annual:paper_list' %}"><i class="glyphicon glyphicon-record"></i> 年度考核</a></li>
+                    <li><a href="{% url 'evm:grade_list' %}"><i class="glyphicon glyphicon-road"></i> 角色管理</a></li>
+                    <li><a href="{% url 'evm:dep_list' %}"><i class="glyphicon glyphicon-list"></i> 部门管理</a></li>
+                    <li><a href="{% url 'evm:user_list' %}"><i class="glyphicon glyphicon-user"></i> 用户管理</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!--页面内容-->
+        {% block content %}{% endblock content %}
+    </div>
+</div>
+
+
+
+<!--避免网页注脚遮挡，添加占位-->
+<div class="placeholder"></div>
+
+<!--Footer-->
+<footer class="footer py-3 bg-dark navbar-fixed-bottom h">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; EVM System 2022</p>
+    </div>
+</footer>
+
+<link href="{% static 'evm/vendors/datatables/dataTables.bootstrap.css' %}" rel="stylesheet" media="screen">
+<!-- <script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> -->
+<script src="{% static 'evm/js/jquery.js' %}"></script>
+<script src="{% static 'evm/js/jquery-ui.js' %}"></script>
+<script src="{% static 'evm/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'evm/vendors/datatables/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'evm/vendors/datatables/dataTables.bootstrap.js' %}"></script>
+<script src="{% static 'evm/js/custom.js' %}"></script>
+<script src="{% static 'evm/js/tables.js' %}"></script>
+{#<script src="{% static 'evm/jquery-3.3.1.min.js' %}"></script>#}
+
+</body>
+</html>
+<!--js-->
+{% block js %} {% endblock %}

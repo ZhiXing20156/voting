@@ -1,0 +1,95 @@
+{% extends "annual/base.html" %}
+{% load static %}
+
+{% block title %}
+    测评投票管理系统
+{% endblock title %}
+
+{% block content %}
+
+<div class="col-md-10">
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title">测评记录</div>
+        </div>
+        <div class="col-md-2 col-sm-6 pull-right">
+            <button class="glyphicon glyphicon-print btn btn-primary pull-right" onclick="preview(1)"> 打印</button>
+        </div>
+        <div class="panel-body">
+            <!--startprint1-->
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+                <thead>
+                <tr>
+                    <th class="text-center">序号</th>
+                    <th class="text-center">测评对象</th>
+                    <th class="text-center">总分</th>
+                    <th class="text-center">德</th>
+                    <th class="text-center">能</th>
+                    <th class="text-center">勤</th>
+                    <th class="text-center">绩</th>
+                    <th class="text-center">学</th>
+                    <th class="text-center">廉</th>
+                    <th class="text-center">综合评价</th>
+                    <th class="text-center">投票角色</th>
+                    <th class="text-center">测评时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in record_list %}
+                <tr>
+                    <td class="text-center">{{ forloop.counter }}</td>
+                    <td class="text-center">{{ obj.obj }}</td>
+                    <td class="text-center">{{ obj.score }}</td>
+                    <td class="text-center">{{ obj.q1 }}</td>
+                    <td class="text-center">{{ obj.q2 }}</td>
+                    <td class="text-center">{{ obj.q3 }}</td>
+                    <td class="text-center">{{ obj.q4 }}</td>
+                    <td class="text-center">{{ obj.q5 }}</td>
+                    <td class="text-center">{{ obj.q6 }}</td>
+                    <td class="text-center">{{ obj.voted }}</td>
+                    <td class="text-center">{{ obj.grade }}</td>
+                    <td class="text-center">{{ obj.time }}</td>
+
+                    <!-- <td class="text-center">
+                        <a onclick="return confirm('确定要删除？')" class="btn btn-danger btn-sm" href="{% url 'evm:drop_user' %}?id={{ user.id }}">
+                        <i
+                                class="fa fa-trash-o fa-fw"
+                                aria-hidden="true"></i>删除
+                        </a>
+                    </td> -->
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <!--endprint1-->
+            <br/>
+            <div class="col-md-3 col-sm-6 pull-right">
+                <a href="{% url 'annual:paper_list' %}" class="btn btn-default pull-right">
+                    <i class="glyphicon glyphicon-step-backward"></i> 返回</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+{% block js %}
+    <script>
+     // 打印
+     function preview(oper) {
+       if (oper < 10) {
+         bdhtml = window.document.body.innerHTML; //获取当前页的html代码
+         sprnstr = "<!--startprint" + oper + "-->"; //设置打印开始区域
+         eprnstr = "<!--endprint" + oper + "-->"; //设置打印结束区域
+         prnhtml = bdhtml.substring(bdhtml.indexOf(sprnstr) + 18); //从开始代码向后取html
+         prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr)); //从结束代码向前取html
+         window.document.body.innerHTML = prnhtml;
+         window.print();
+         window.document.body.innerHTML = bdhtml;
+       } else {
+         window.print();
+       }
+     }
+    </script>
+{% endblock %}
+
+

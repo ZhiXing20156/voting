@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>测评列表</title>
+        <link href="{% static 'employ/voting/datatables/style.css'%}" rel="stylesheet">
+        <link href="{% static 'employ/voting/css/styles.css' %}" rel="stylesheet" />
+        <link href="{% static 'font/bootstrap-icons.css' %}">
+        <link href="{% static 'employ/voting/images/favicon.ico' %}" rel="shortcut icon"/>
+        <script src="{% static 'font/all.js' %}" crossorigin="anonymous"></script>
+        <!-- 时间js -->
+        <script src="{% static 'employ/voting/jquery-3.3.1.min.js' %}"></script>
+        <script src="{% static 'employ/voting/js/jquery.countdown.js' %}"></script>
+
+        <style>
+            /* 链接点击 */
+            a:link {color: #2a83cf;text-decoration:none;}
+            a:visited{color: gray;text-decoration:none;}
+        </style>
+
+    </head>
+    <body class="sb-nav-fixed">
+        <!--Header-->
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#2a83cf">
+        <div class="container">
+                <a class="navbar-brand" href="#">干部选任民主测评投票系统</a>
+                <div class="user">
+                    <ul class="navbar-nav">
+                        <li>
+                            <a class="nav-link"><i class="fas fa-user fa-fw"></i> {{request.session.username}}</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#" onclick="logout();"><i class="fas fa-power-off fa-fw"></i> 退出登录</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--content-->
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <div class="row">
+                    <div class="col-md-8 ">
+                        <div class="alert alert-info" style="position:relative; top:150px; left:50px;opacity: 0.9">
+                            <strong>备注:<br></strong>
+                            <i>&nbsp;&nbsp;* 请点击测评对象进行投票,<br>
+                            访问后链接颜色发生改变,
+                            但仍可点击修改。<br>
+                                &nbsp;&nbsp;* 完成所有评价后系统自动退出。
+                            </i>
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                    {% for p in paper %}
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <i class="fas fa-th-list me-1"></i>
+                                        测评对象列表
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!-- 倒计时 -->
+                                        <!-- <p class="test_time">
+							                <i class="icon iconfont">&#xe6fb;</i><b class="alt-1">01:40</b>
+						                </p> -->
+                                    </div>
+{#                                    <div class="col-md-2 ">#}
+{#                                        <button type="submit" class="button1" onclick="logout();"><i class="fas fa-spinner"></i> 提交</button>#}
+{#                                    </div>#}
+                                </div>
+
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" style="width: 180px;">序号</th>
+                                            <th class="text-center">测评对象</th>
+
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th class="text-center" style="width: 180px;">序号</th>
+                                            <th class="text-center">测评对象</th>
+
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    {% for obj in p.obj.all %}
+                                        <tr>
+                                            <td class="text-center" style="width: 180px;">{{ forloop.counter }}</td>
+
+                                            <td class="text-center">
+                                                <a href="{% url 'employ:startVote' %}/?name={{ user }}&id={{ p.id }}&obj={{ obj }}">
+                                                    {{ obj }}
+                                                </a>
+                                            </td>
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!--避免网页注脚遮挡，添加占位-->
+        <div class="placeholder">
+            <div style="height: 100px;"></div>
+        </div>
+
+        <!--Footer-->
+        <footer class="py-3 bg-dark fixed-bottom">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; Voting System 2022</p>
+            </div>
+        </footer>
+
+
+        <script type="text/javascript">
+            function searchForName() {
+                var input, filter, table, tr, td, i, j;
+                input = document.getElementById("dataTable-Input");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("datatablesSimple");
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 0; i < tr.length; i++) {
+                    tr[i].style.display = "none";
+                    for (j = 0; j < 7; j++) {
+                        td = tr[i].getElementsByTagName("td")[j];
+                        if (td) {
+                            if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
+                                tr[i].style.display = "";
+                        }
+                    }
+                }
+            }
+            // logout
+            logout = function () {
+                $.ajax({
+                    url:  "{% url 'employ:logout' %}",
+                    type: "get",
+                    success(res) {
+                        if (res.code === 1) {
+                            alert("还未给" + res.msg + "投票！")
+                        } else {
+                            alert('已完成投票，退出登录。')
+                            window.location.href = "{% url 'employ:login' %}";
+                        }
+                    }
+                })
+            };
+
+            // timer
+            window.jQuery(function($) {
+                "use strict";
+                $('time').countDown({
+                    with_separators : false
+                });
+                $('.alt-1').countDown({
+                    css_class : 'countdown-alt-1'
+                });
+                $('.alt-2').countDown({
+                    css_class : 'countdown-alt-2'
+                });
+
+            });
+        </script>
+        <script src="{% static 'employ/voting/jquery/3.2.1/jquery.min.js' %}"></script>
+        <script src="{% static 'employ/voting/jquery/jquery-3.6.0.min.js' %}"></script>
+        <script src="{% static 'employ/voting/js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>
+        <script src="{% static 'employ/voting/js/scripts.js' %}"></script>
+        <script src="{% static 'employ/voting/js/chart 2.8.0/Chart.min.js' %}" crossorigin="anonymous"></script>
+        <script src="{% static 'employ/voting/assets/demo/chart-area-demo.js' %}"></script>
+        <script src="{% static 'employ/voting/assets/demo/chart-bar-demo.js' %}"></script>
+        <script src="{% static 'employ/voting/datatables/simple-datatables@latest' %}" crossorigin="anonymous"></script>
+        <script src="{% static 'employ/voting/js/datatables-simple-demo.js' %}"></script>
+    </body>
+</html>
+
+
+
+

@@ -1,0 +1,99 @@
+{% extends "recom/base.html" %}
+{% load static %}
+
+{% block title %}
+    测评投票管理系统
+{% endblock title %}
+
+{% block layout %}
+
+<li><a href="{% url 'recom:count_list' %}"><i class="glyphicon glyphicon-stats"></i> 测评统计</a></li>
+
+
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-10">
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title">测评统计</div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 pull-right">
+            <button class="glyphicon glyphicon-print btn btn-primary pull-right" onclick="preview(1)"> 打印</button>
+            <form action="{% url 'recom:download' %}" method="post" enctype="multipart/form-data">
+             {% csrf_token %}
+                <button class="glyphicon  glyphicon-download-alt btn btn-default" type="submit"> 导出</button>
+            </form>
+        </div>
+
+        <div class="panel-body">
+            <!--  打印内容   -->
+            <!--startprint1-->
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+
+                <thead>
+                <tr>
+                    <th class="text-center" rowspan="2" style="vertical-align: middle;">推荐人选</th>
+                    <th class="text-center" rowspan="2" style="vertical-align: middle;">现工作岗位</th>
+                    <th class="text-center" colspan="3">民主推荐得票数</th>
+                    <th class="text-center" colspan="2">得票率</th>
+                </tr>
+                <tr>
+                    <th class="text-center">台领导</th>
+                    <th class="text-center">中层干部</th>
+                    <th class="text-center">普通职工</th>
+                    <th class="text-center">总票数</th>
+                    <th class="text-center">得票率</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in count %}
+                        <tr>
+                            <td class="text-center">{{ obj.obj }}</td>
+                            <td class="text-center">{{ obj.post }}</td>
+                            <td class="text-center">{{ obj.vl }}</td>
+                            <td class="text-center">{{ obj.vm }}</td>
+                            <td class="text-center">{{ obj.vs }}</td>
+                            <td class="text-center">{{ obj.sum }}</td>
+                            <td class="text-center">{{ obj.ratio }}</td>
+
+                        </tr>
+                        {% endfor %}
+                </tbody>
+
+            </table>
+            <!--endprint1-->
+            <br/>
+            <div class="col-md-3 col-sm-6 pull-right">
+                <a href="{% url 'recom:paper_list' %}" class="btn btn-default pull-right">
+                    <i class="glyphicon glyphicon-step-backward"></i> 返回</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+    <script>
+     // 打印
+     function preview(oper) {
+       if (oper < 10) {
+         bdhtml = window.document.body.innerHTML; //获取当前页的html代码
+         sprnstr = "<!--startprint" + oper + "-->"; //设置打印开始区域
+         eprnstr = "<!--endprint" + oper + "-->"; //设置打印结束区域
+         prnhtml = bdhtml.substring(bdhtml.indexOf(sprnstr) + 18); //从开始代码向后取html
+         prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr)); //从结束代码向前取html
+         window.document.body.innerHTML = prnhtml;
+         window.print();
+         window.document.body.innerHTML = bdhtml;
+       } else {
+         window.print();
+       }
+     }
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% load static %}
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 上述meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <!-- Bootstrap CSS -->
+    <!-- <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="{% static 'annual/login/bootstrap/4.3.1/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'annual/login/css/login.css' %}" rel="stylesheet"/>
+    <link href="{% static 'annual/login/images/favicon.ico' %}" rel="shortcut icon"/>
+      <!--字体图标-->
+    
+    <link href="{% static 'font/bootstrap-icons.css' %}">
+    <script src="{% static 'font/all.js' %}" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"> -->
+    <!-- <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script> -->
+      
+    <title>登录</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="div_top">年度考核测评投票系统</div>
+            <div class="login">
+              <div class="message">用户登录</div>
+              <div id="darkbannerwrap"></div>
+              <form class="form-login" action="{% url 'annual:login' %}" method="post">
+                   {% if msg %}
+                    <div class="alert alert-warning">{{ msg }}</div>
+                  {% endif %}
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <i class="fas fa-user fa-fw"></i> {{ login_form.username.label_tag }}
+                      {{ login_form.username}}
+                  </div>
+                  <div class="form-group">
+                      <i class="fa fa-key fa-fw"></i> {{ login_form.password.label_tag }}
+                      {{ login_form.password }}
+                  </div>
+                  <div>
+                      <!--鼠标移入改变颜色-->
+                      <button type="submit" class="button1">登录</button>
+                  </div>
+              </form>
+            </div>
+    </div> <!-- /container -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <!-- 以下三者的引用顺序是固定的 -->
+    <script src="{% static 'annual/login/js/jquery.js'%}"></script>
+    <script src="{% static 'annual/login/js/popper.js' %}"></script>
+    <script src="{% static 'annual/login/js/bootstrap.min.js' %}"></script>
+
+    <!-- <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.15.0/umd/popper.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+  </body>
+</html>

@@ -1,0 +1,53 @@
+body {
+  height: 100%;
+  background-color:#f7f7f7;
+  margin: 0px;
+  font-size: 15px;
+  padding: 0px;
+  overflow:auto;
+}
+.button1{
+    display: inline-block;
+    /*垂直居中*/
+    vertical-align: middle;
+     padding: 12px 24px;
+    margin: 0px;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #ffffff;
+    background-color:#2a83cf;
+    border-radius: 6px;
+    border: none;
+    -webkit-appearance: none;
+    outline:none;
+    width:100%;
+    letter-spacing: 10px;
+}
+.button1:hover{
+   display: inline-block;
+    vertical-align: middle;
+    padding: 12px 24px;
+    margin: 0px;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #ffffff;
+    background-color:#2779bf;
+    border-radius: 6px;
+    border: none;
+    -webkit-appearance: none;
+    outline:none;
+    width:100%;
+    letter-spacing: 10px;
+}
+.placeholder{
+height:60px;
+}
+

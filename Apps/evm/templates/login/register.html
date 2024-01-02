@@ -1,0 +1,58 @@
+{% load static %}
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 上述meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <!-- Bootstrap CSS -->
+    <!-- <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="{% static 'login/bootstrap/4.3.1/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'login/login.css' %}" rel="stylesheet"/>
+    <link href="{% static 'login/images/favicon.ico' %}" rel="shortcut icon"/>
+      <!--字体图标-->
+    <link href="{% static 'font/bootstrap-icons.css' %}">
+    <script src="{% static 'font/all.js' %}" crossorigin="anonymous"></script>
+
+    <title>注册</title>
+  </head>
+  <body>
+    <div class="placeholder" style="height: 60px;"> </div>
+    <div class="container">
+        <div class="login">
+          <div class="message1">账号注册</div>
+          <div id="darkbannerwrap"></div>
+          <form class="form-login" action="{% url 'evm:register' %}" method="post">
+              {% if msg %}
+                <div class="alert alert-warning">{{ msg }}</div>
+              {% endif %}
+              {% csrf_token %}
+              <div class="form-group">
+                  <i class="fas fa-user fa-fw"></i> {{ register_form.username.label_tag }}
+                  {{ register_form.username}}
+              </div>
+              <div class="form-group">
+                  <i class="fa fa-key fa-fw"></i> {{ register_form.password1.label_tag }}
+                  {{ register_form.password1 }}
+              </div>
+              <div class="form-group">
+                  <i class="fa fa-key fa-fw"></i> {{ register_form.password2.label_tag }}
+                  {{ register_form.password2 }}
+              </div>
+              <div>
+                  <!--鼠标移入改变颜色-->
+                  <button type="submit" class="button2">注册</button>
+                  <a href="{% url 'evm:login' %}" class="text-success"><ins>直接登录</ins></a>
+              </div>
+          </form>
+    </div>
+  </div>
+
+    <!-- 以下三者的引用顺序是固定的 -->
+    <script src="{% static 'login/js/jquery.js'%}"></script>
+    <script src="{% static 'login/js/popper.js' %}"></script>
+    <script src="{% static 'login/js/bootstrap.min.js' %}"></script>
+
+  </body>
+</html>

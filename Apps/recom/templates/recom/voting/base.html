@@ -1,0 +1,88 @@
+{% load static %}
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link href="{% static 'recom/voting/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'font/bootstrap-icons.css' %}">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" /> -->
+    <link href="{% static 'recom/voting/datatables/style.css'%}" rel="stylesheet">
+    <!-- 引入自定义css -->
+    <link href="{% static 'recom/voting/css/index.css' %}" rel="stylesheet"/>
+    <!-- 引入网页图标 -->
+    <link href="{% static 'recom/voting/images/favicon.ico' %}" rel="shortcut icon"/>
+    <!--用户名前的图标-->
+    <script src="{% static 'font/all.js' %}" crossorigin="anonymous"></script>
+<style>
+    /* 链接访问后颜色改变 */
+    a:link {color: #2a83cf;}
+    a:visited{color: gray;}
+
+</style>
+</head>
+<body>
+<!--Header-->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#2a83cf">
+   <div class="container">
+        <a class="navbar-brand" href="#">干部选任民主测评投票系统</a>
+        <div class="user">
+            <ul class="navbar-nav">
+                <li>
+                    <a class="nav-link">
+                        <i class="fas fa-user fa-fw"></i> {{request.session.username}}
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="#" onclick="logout();">
+                        <i class="fas fa-power-off fa-fw"></i> 退出登录
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% block content %}{% endblock content %}
+
+<!--避免网页注脚遮挡，添加占位-->
+<div class="placeholder"></div>
+
+<!--Footer-->
+<footer class="py-3 bg-dark fixed-bottom">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Voting System 2022</p>
+    </div>
+</footer>
+
+<!-- logout -->
+ <script language="javascript" type="text/javascript">
+    logout = function () {
+        $.ajax({
+            url:  "{% url 'recom:logout' %}",
+            type: "get",
+            success(res) {
+                if (res.code === 1) {
+                    alert("还未给 " + res.msg +" 投票！不能退出登录。")
+                } else {
+                    confirm("确定要退出吗？")
+                    window.location.href = "{% url 'recom:login' %}";
+                }
+            }
+        })
+    }
+</script>
+
+<script src="{% static 'recom/voting/jquery/3.2.1/jquery.min.js' %}"></script>
+<script src="{% static 'recom/voting/jquery/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'recom/voting/js/popper1.16.1/popper.min.js' %}"></script>
+<script src="{% static 'recom/voting/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'recom/voting/js/bootstrap.bundle.min.js' %}" crossorigin="anonymous"></script>
+<script src="{% static 'recom/voting/js/scripts.js' %}"></script>
+<script src="{% static 'recom/voting/datatables/simple-datatables@latest' %}" crossorigin="anonymous"></script>
+<script src="{% static 'recom/voting/js/datatables-simple-demo.js' %}"></script>
+
+</body>
+</html>
+
+{% block js %} {% endblock %}

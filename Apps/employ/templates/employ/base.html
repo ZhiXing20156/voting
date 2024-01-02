@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!--标题-->
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<link href="https://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" rel="stylesheet" media="screen">-->
+    <link href="{% static 'employ/bootstrap/css/jquery-ui.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'employ/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'employ/css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'employ/images/favicon.ico' %}" rel="shortcut icon"/>
+    <!-- <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> -->
+    <script src="{% static 'employ/js/html5shiv.js' %}"></script>
+    <!-- <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script> -->
+    <script src="{% static 'employ/js/respond.min.js' %}"></script>
+    {% block css %}{% endblock %}
+</head>
+
+<body>
+<!--Header-->
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <!-- Logo -->
+                <div class="logo">
+                    <h1><a>试聘期或聘期届满考核</a></h1>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="input-group form">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <span class="input-group-btn">
+	                         <button class="btn btn-primary" type="button">搜索</button>
+	                       </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="navbar navbar-inverse" role="banner">
+                    <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="glyphicon glyphicon-user"></i> {{ request.session.user_name }}
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu animated fadeInUp">
+                                    <li><a href="{% url 'evm:logout' %}"><i class="glyphicon glyphicon-off"></i> 退出登录</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="sidebar content-box" style="display: block;">
+                <ul class="nav">
+                    <!-- Main menu -->
+                    <li class="current"><a href="{% url 'employ:paper_list' %}"><i class="glyphicon glyphicon-tasks"></i> 测评管理</a></li>
+                    {% block layout %} {% endblock %}
+
+                     <li class="submenu" >
+                        <a href="#">
+                            <i class="glyphicon glyphicon-tags"></i> 问题管理
+                            <span class="caret pull-right"></span>
+                        </a>
+                        <ul>
+                            <li><a href="{% url 'employ:qc_list' %}"> 考评内容</a></li>
+                            <li><a href="{% url 'employ:qo_list' %}"> 续聘意见</a></li>
+                        </ul>
+                    <li><a href="{% url 'employ:obj_list' %}"><i class="glyphicon glyphicon-user"></i> 测评对象</a></li>
+                    <li><a href="{% url 'evm:index' %}"><i class="glyphicon glyphicon-home"></i> 返回首页</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!--页面内容-->
+        {% block content %}{% endblock content %}
+    </div>
+</div>
+
+
+
+<!--避免网页注脚遮挡，添加占位-->
+<div class="placeholder"></div>
+
+<!--Footer-->
+<footer class="footer py-3 bg-dark navbar-fixed-bottom h">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; EVM System 2022</p>
+    </div>
+</footer>
+
+<link href="{% static 'employ/vendors/datatables/dataTables.bootstrap.css' %}" rel="stylesheet" media="screen">
+<!-- <script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> -->
+<script src="{% static 'employ/js/jquery.js' %}"></script>
+<script src="{% static 'employ/js/jquery-ui.js' %}"></script>
+<script src="{% static 'employ/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'employ/vendors/datatables/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'employ/vendors/datatables/dataTables.bootstrap.js' %}"></script>
+<script src="{% static 'employ/js/custom.js' %}"></script>
+<script src="{% static 'employ/js/tables.js' %}"></script>
+{#<script src="{% static 'evm/jquery-3.3.1.min.js' %}"></script>#}
+
+</body>
+</html>
+<!--js-->
+{% block js %} {% endblock %}

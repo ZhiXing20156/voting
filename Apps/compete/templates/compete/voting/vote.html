@@ -1,0 +1,97 @@
+{% extends "compete/voting/base.html" %}
+{% load static %}
+
+{% block title %}
+   用户投票
+{% endblock title %}
+
+{% block content %}
+{% for p in paper %}
+<div class="container">
+<br/>
+    <div>
+        <p>
+        <!--预格式文本-->
+        <pre class="text-center" style="font-size: larger;"><b>{{ p.title }}</b></pre>
+        </p>
+    </div>
+    <br/>
+    <div class="page-content">  
+        <form action="{% url 'compete:voteCount' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="name" value="{{ user.name }}">
+            <input type="hidden" name="id" value="{{ id }}">
+
+            <div class="container">
+
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+                <thead>
+                <tr>
+                    <th class="text-center">竞聘岗位</th>
+                    <th class="text-center">职数</th>
+                    <th class="text-center">姓名</th>
+                    <th class="text-center">测评意见</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                    <!--考评内容:德、能...-->
+                    {% for test in p.obj.all %}
+                    <tr>
+                        <div id="{{ forloop.counter }}">
+                            <td class="text-center">{{ test.post }}</td>
+                            <td class="text-center">{{ test.post.num }}</td>
+                            <td class="text-center">{{ test.obj }}</td>
+                            <td class="text-center">
+                                <ul>
+                                    <!--<li>标签横排排列,右边距为20,将块元素li更改显示为内联元素，不换行显示-->
+                                    <li class="option" style="display: inline;margin-right: 20px;" >
+                                        <input type="radio" class="radioOrCheck" name="{{ test.obj }}"
+                                               value="{{ test.a }}"/>
+                                            <p class="ue" style="display: inline;">{{ test.a }}</p>
+                                    </li>
+                                    <li class="option" style="display: inline;margin-right: 20px;">
+                                        <input type="radio" class="radioOrCheck" name="{{ test.obj }}"
+                                               value="{{ test.b }}"/>
+                                            <p class="ue" style="display: inline;">{{ test.b }}</p>
+                                    </li>
+                                    <li class="option"style="display: inline;margin-right: 20px;">
+                                        <input type="radio" class="radioOrCheck" name="{{ test.obj }}"
+                                               value="{{ test.c }}"/>
+                                            <p class="ue" style="display: inline;">{{ test.c}}</p>
+                                    </li>
+
+                                </ul>
+                            </td>
+{#                            <!-- <b>{{ forloop.counter}}.</b> -->#}
+{#                            <th class="text-center" style="width: 150px;font-size:18px;font-weight: normal;font-family: 'Adobe 宋体 Std L'">{{ test.obj }}</th>#}
+{#                            <th style="font-weight: normal;font-family: 'Adobe 宋体 Std L';">#}
+{#                                #}
+{#                            </th>#}
+                        </div>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+                </table>
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <p style="font-weight: lighter;">
+                       <i>&nbsp;&nbsp;&nbsp;***注: 本票为民主测评票，请在测评意见中选择相应意见，凡是你认为合适的都可选。</i>
+                    </p>
+                </div>
+                <div class="col-md-2">
+                <div align="center">
+                    <button type="submit"  class="button1"> <i class="fas fa-upload"></i> 提交</button>
+                </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
+

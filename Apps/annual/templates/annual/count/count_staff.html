@@ -1,0 +1,89 @@
+{% extends "annual/base.html" %}
+{% load static %}
+
+{% block title %}
+    测评投票管理系统
+{% endblock title %}
+
+{% block layout %}
+
+    <li class="submenu" >
+    <a href="#">
+        <i class="glyphicon glyphicon-stats"></i> 测评统计
+        <span class="caret pull-right"></span>
+    </a>
+    <ul>
+        <li><a href="{% url 'annual:count_all' %}"> 全体</a></li>
+        <li><a href="{% url 'annual:count_leader' %}">台领导</a></li>
+        <li><a href="{% url 'annual:count_middle' %}">中层干部</a></li>
+        <li><a href="{% url 'annual:count_staff' %}">普通职工</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-10">
+    <div class="content-box-large">
+        <div class="panel-heading">
+            <div class="panel-title"><i class="glyphicon glyphicon-hand-right"></i> 普通职工</div>
+        </div>
+
+        <div class="col-md-2 col-sm-6 pull-right">
+            <form action="{% url 'annual:download' %}" method="post" enctype="multipart/form-data">
+             {% csrf_token %}
+                <button class="glyphicon  glyphicon-download-alt btn btn-default pull-right" type="submit"> 导出</button>
+            </form>
+        </div>
+
+        <div class="panel-body">
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
+                <thead>
+                <tr>
+                    <th class="text-center">序号</th>
+                    <th class="text-center">测评对象</th>
+                    <th class="text-center">总分</th>
+                    <th class="text-center">德</th>
+                    <th class="text-center">能</th>
+                    <th class="text-center">勤</th>
+                    <th class="text-center">绩</th>
+                    <th class="text-center">学</th>
+                    <th class="text-center">廉</th>
+                    <th class="text-center">优秀</th>
+                    <th class="text-center">合格</th>
+                    <th class="text-center">基本合格</th>
+                    <th class="text-center">不合格</th>
+                    <th class="text-center">弃权</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in count_staff %}
+                        <tr>
+                            <td class="text-center">{{ forloop.counter }}</td>
+                            <td class="text-center">{{ obj.obj }}</td>
+                            <td class="text-center">{{ obj.score }}</td>
+                            <td class="text-center">{{ obj.q1 }}</td>
+                            <td class="text-center">{{ obj.q2 }}</td>
+                            <td class="text-center">{{ obj.q3 }}</td>
+                            <td class="text-center">{{ obj.q4 }}</td>
+                            <td class="text-center">{{ obj.q5 }}</td>
+                            <td class="text-center">{{ obj.q6 }}</td>
+                            <td class="text-center">{{ obj.voted_A }}</td>
+                            <td class="text-center">{{ obj.voted_B }}</td>
+                            <td class="text-center">{{ obj.voted_C }}</td>
+                            <td class="text-center">{{ obj.voted_D }}</td>
+                            <td class="text-center">{{ obj.voted_E }}</td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+            <br/>
+            <div class="col-md-3 col-sm-6 pull-right">
+                <a href="{% url 'annual:count_middle' %}" class="btn btn-default pull-right">
+                    <i class="glyphicon glyphicon-chevron-left"></i> 上一页</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
